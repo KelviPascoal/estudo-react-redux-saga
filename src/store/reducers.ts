@@ -1,30 +1,37 @@
+import { Pokemon } from "../components/Pokemons";
 import { ActionTypes } from "./actions";
 
-interface Post {
-  name: string;
-  url: string;
-}
-
 interface State {
-  posts: Post[];
+  pokemons: Pokemon[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: State = {
-  posts: [],
+  pokemons: [],
   loading: false,
   error: null,
 };
 
-const rootReducer = (state = initialState, action: any): State => {
+const rootReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case ActionTypes.FETCH_REQUEST:
       return { ...state, loading: true, error: null };
     case ActionTypes.FETCH_SUCCESS:
-      return { ...state, loading: false, posts: action.payload, error: null };
+      return { ...state, loading: false, pokemons: action.payload, error: null };
     case ActionTypes.FETCH_ERROR:
       return { ...state, loading: false, error: action.payload };
+
+    ///////////////////////////////////////
+    case ActionTypes.DELETE_POKEMON:
+      console.log('action.payload: ', action.payload)
+      const index = state.pokemons.findIndex(item => item.name === action.payload.id)
+      const newList = state.pokemons
+      newList.splice(index, 1)
+      return { ...state, loading: false, error: false, pokemons: [...newList] };
+
+    ///////////////////////////////////////
+
     default:
       return state;
   }

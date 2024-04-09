@@ -1,9 +1,9 @@
-import Posts from './components/Pokemons';
+import { Pokemons } from './components/Pokemons';
 
 function App() {
   return (
     <div>
-      <Posts />
+      <Pokemons />
     </div>
   );
 }
